@@ -1,0 +1,41 @@
+/*
+  .css/main.css
+ */
+@import 'color.css';
+
+/** nav styles **/
+nav .brand-logo{
+    font-size: 20px;
+}
+nav .brand-logo.left{
+    padding-left: 5px;
+}
+nav .brand-logo.right{
+    padding-right: 5px;
+}
+nav .button-collapse, 
+nav .button-collapse:hover, 
+.button-collapse:focus{
+    color: #fff;
+}
+
+/* action button */
+.action-button i{
+    font-size: 1.36em;
+}
+
+/* note inputs */
+.input-field.first{
+    margin-top: 2rem !important;
+}
+
+/* note page */
+h5{
+    font-weight: 300;
+}
+h5.title{
+    font-size: 1.5rem;
+}
+.collection .collection-item.avatar .title{
+    font-weight: 500;
+}

@@ -1,0 +1,29 @@
+/**
+    .css/style.css
+*/
+a,
+a:hover,
+a:focus,nav ul a {
+  color: #fdd835;
+}
+nav ul a:hover{
+  background-color: transparent;
+}
+input[type=text]:focus:not([readonly]),
+input[type=email]:focus:not([readonly]),
+input[type=password]:focus:not([readonly]) {
+  border-bottom: 1px solid #fdd835 !important;
+  box-shadow: 0 1px 0 0 #fdd835 !important;
+}
+input[type=text]:focus:not([readonly]) + label {
+  color: #fdd835 !important;
+}
+input[type=email]:focus:not([readonly]) + label {
+  color: #fdd835 !important;
+}
+input[type=password]:focus:not([readonly]) + label {
+  color: #fdd835 !important;
+}
+.input-field {
+  color: #000000 !important;
+}

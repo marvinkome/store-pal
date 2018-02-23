@@ -32,12 +32,6 @@ export default class LoginForm extends React.Component{
     }
 
     render(){
-        let login = true;
-
-        if (this.props.formType == 'signup'){
-            login = false;
-        }
-
         const {email, name, password} = this.state;
         let password_valid = false;
 
@@ -45,13 +39,16 @@ export default class LoginForm extends React.Component{
             password_valid = true;
         }
 
-        const error_msg = 'Password should be more than 5 characters long'
+        let error_msg = 'Password should be more than 5 characters long';
+        if (this.props.state){
+            error_msg = 'Logging in please wait'
+        }
 
         return(
                 <div className="container">
                     <div className="center">
                         <h2 className="thin">Store Pal</h2>
-                        <p>{ login ? 
+                        <p>{ this.props.formType == 'login' ? 
                             'Log in to your account':
                             'Sign up to get started'
                         }</p>
@@ -59,25 +56,29 @@ export default class LoginForm extends React.Component{
 
                     <div className="section center">
                     <div className="row"> 
-                        {login ? '':
+                        {this.props.formType == 'login' ? '':
                         <div className="card left-align">
                             <div className="card-content">
                                 <p>Note: {error_msg}</p>
                             </div>
                         </div>}                                                       
                         <div className="col s12">
-                            { login ? 
-                            <form className="row">
+                            { this.props.formType == 'login' ? 
+                            <form onSubmit={this.handleSubmit} className="row">
                                 <div className="col s12 input-field">
                                     <label htmlFor="email">Email </label>
-                                    <input type="email" className="validate" id="email"/>
+                                    <input type="email" className="validate" id="email"
+                                      onChange={this.handleForm} required/>
                                 </div>
                                 <div className="input-field col s12">
                                     <label htmlFor="password"> Password </label>
-                                    <input type="password" className="validate" id="password"/>
+                                    <input type="password" className={password_valid?'valid':'invalid'} 
+                                        id="password" required onChange={this.handleForm}
+                                        data-error={error_msg}/>
                                 </div>
-                                <button className="btn waves-effect waves-dark yellow">
-                                    Log In
+                                <button className={password_valid ? 'btn waves-effect waves-dark yellow':
+                                    "btn waves-effect waves-dark yellow disabled"}>
+                                    Sign Up
                                 </button>
                             </form>:
                             <form onSubmit={this.handleSubmit} className="row">
@@ -96,17 +97,17 @@ export default class LoginForm extends React.Component{
                                         id="password" required onChange={this.handleForm}
                                         data-error={error_msg}/>
                                 </div>
-                                <button className={password_valid?'btn waves-effect waves-dark yellow':
+                                <button className={password_valid ? 'btn waves-effect waves-dark yellow':
                                     "btn waves-effect waves-dark yellow disabled"}>
                                     Sign Up
                                 </button>
                             </form>}   
                         </div>
 
-                        {login ? '':
+                        {this.props.formType == 'login' ? '':
                         <p>By signing up you accept the <a href="#!">Terms and conditions</a></p>}
 
-                        {login ?
+                        {this.props.formType == 'login' ?
                         <div className="col s12">
                             <p> Don't have a account? <Link to='/register'>Register</Link></p>
                         </div>:

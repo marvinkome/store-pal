@@ -7,12 +7,13 @@ import * as constants from '../constants';
 const initialState = {
     isFetching: false,
     isLoggingIn: false,
+    didInvalidate: false,
     lastFetch: '',
     access_token: '',
     items: {
         id: 0,
-        name: 'John Doe',
-        email: 'johndoe@gmail.com',
+        name: 'Jane Doe',
+        email: 'janedoe@gmail.com',
         inventories: [
             {
                 id: 0,
@@ -41,15 +42,24 @@ const rootReducer = (state = initialState, action) => {
     switch (action.type){
         case constants.REQUEST_TOKEN:
             state.isLoggingIn = true;
-            console.log(state);
             return state;
 
-        case constants.RECIEVE_TOKEN:
+        case constants.DID_INVALIDATE:
+            state.didInvalidate = true;
             state.isLoggingIn = false;
-            state.loggedIn = true;       
+            return state;
+        case constants.RECIEVE_TOKEN:
+            state.isLoggingIn = false;  
+            state.didInvalidate = false;    
             state.access_token =  action.access_token;
 
             saveToken(action.refresh_token);
+            return state;
+
+        case constants.LOGOUT_USER:      
+            state.access_token =  '';
+            localStorage.removeItem('loggedIn');
+
             return state;
 
         case constants.REQUEST_DATA:

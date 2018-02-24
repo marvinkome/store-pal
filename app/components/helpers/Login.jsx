@@ -121,6 +121,9 @@ export default class LoginForm extends React.Component{
                             {this.props.formType == 'login' ? '':
                             <p>By signing up you accept the <a href="#!">Terms and conditions</a></p>}
 
+                            {this.props.auth && 
+                            <p>Invalid data. Login again</p>}
+                            
                             {this.props.formType == 'login' ?
                             <div className="col s12">
                                 <p> Don't have a account? <Link to='/register'>Register</Link></p>

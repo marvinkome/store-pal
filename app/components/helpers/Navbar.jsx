@@ -4,9 +4,28 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import history from '../../js/history';
+import {connect} from 'react-redux';
 import { SideNav, SideNavItem } from 'react-materialize';
+import { logout_user } from '../../js/actions';
 
-export default class Navbar extends React.Component{
+const mapDispatchToProps = dispatch => {
+    return {
+        logout_user: dispatch(logout_user())
+    }
+}
+
+class ConnectingNavbar extends React.Component{
+    constructor(props){
+        super(props);
+        this.logoutUser = this.logoutUser.bind(this)
+    }
+    logoutUser(){
+        if(localStorage){
+            
+            history.push('/login');
+        }
+    }
     render(){
         return(
             <nav className="yellow darken-1 nav-extended">
@@ -20,8 +39,8 @@ export default class Navbar extends React.Component{
 		                    user={{
 			                    background: './app/images/office.jpg',
 			                    image: './app/images/yuna.jpg',
-			                    name: 'John Doe',
-			                    email: 'jdandturk@gmail.com'
+			                    name: this.props.data.items.name,
+			                    email: this.props.data.items.email
 		                    }}
 	                    />
 	                    <li className="waves-effect waves-yellow">
@@ -31,8 +50,8 @@ export default class Navbar extends React.Component{
                         </li>
 	                    <SideNavItem divider />
                         <li className="waves-effect waves-yellow">
-                            <a className='light'>
-                                <i className="fa fa-signout"></i> Logout
+                            <a className='light' onClick={this.logoutUser}>
+                                <i className="fa fa-sign-out"></i> Logout
                             </a>
                         </li>
                     </SideNav>
@@ -41,3 +60,7 @@ export default class Navbar extends React.Component{
         );
     }
 }
+
+const Navbar = connect(null, mapDispatchToProps)(ConnectingNavbar);
+
+export default Navbar;

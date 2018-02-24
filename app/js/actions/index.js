@@ -14,6 +14,10 @@ export const recieveToken = (res) => ({
     refresh_token: res.refresh_token
 });
 
+export const didInvalidate = () => ({
+    type: constants.DID_INVALIDATE
+})
+
 export const addInventory = inventory => ({ 
     type: constants.ADD_INVENTORY, 
     payload: inventory
@@ -34,7 +38,6 @@ export const recieveData = (data) => ({
     type: constants.RECIEVE_DATA,
     data: data
 });
-
 
 export function register_user(data){
     return dispatch => {
@@ -81,8 +84,18 @@ export const login_user = (data) => {
         return fetch('http://127.0.0.1:5000/login', headers).then(
             resp => resp.json()
         ).then(
-            (res) => {dispatch(recieveToken(res));},
+            (res) => {
+                if(res.msg == 'Wrong password' || res.msg == 'Wrong email'){
+                    dispatch(didInvalidate());
+                } else {
+                    dispatch(recieveToken(res));
+                }
+            },
             (error) => console.log('Error: ' + error)
         )
     }
 };
+
+export const logout_user = () => ({
+    type: constants.LOGOUT_USER
+})

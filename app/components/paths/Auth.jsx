@@ -10,7 +10,7 @@ import history from '../../js/history';
 
 // Redux
 import {connect} from 'react-redux';
-import { register_user, login_user } from '../../js/actions';
+import { register_user, login_user, recieveToken } from '../../js/actions';
 
 // Components
 import LoginForm from '../helpers/Login.jsx';
@@ -33,12 +33,11 @@ class ConnectingLogin extends React.Component{
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
     handleSubmit(e, state){
         this.props.login_user(state).then(
             (res) => {
                 this.forceUpdate();
-                if(localStorage.loggedIn){
+                if(localStorage.loggedIn && !this.props.state.didInvalidate){
                     history.push('/')
                 }
             }
@@ -47,9 +46,10 @@ class ConnectingLogin extends React.Component{
     }
     render(){
         const isLoggingIn = this.props.state.isLoggingIn;
+        const didInvalidate = this.props.state.didInvalidate;
         return(
             <LoginForm formType='login' onSubmit={this.handleSubmit}
-              state={isLoggingIn}/>
+              state={isLoggingIn} auth={didInvalidate}/>
         );
     }
 }

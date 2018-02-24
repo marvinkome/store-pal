@@ -43,7 +43,7 @@ class ConnectingIndex extends React.Component{
         const inventories = this.props.data.items.inventories;
         return(
             <div>
-                <Navbar/>
+                <Navbar data={this.props.data}/>
                 <Listing page='index' user_data={inventories}/>
                 <Modal
                     header='Add Inventory'
@@ -85,7 +85,7 @@ class ConnectingProducts extends React.Component{
         const inventory = this.props.data.items.inventories.find(obj => obj.id == id);
         return(
             <div>
-                <Navbar/>
+                <Navbar data={this.props.data}/>
                 <Listing page='inventory' user_data={inventory}/>
                 <Modal
                     header='Add Product'

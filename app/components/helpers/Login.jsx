@@ -53,69 +53,84 @@ export default class LoginForm extends React.Component{
                             'Sign up to get started'
                         }</p>
                     </div>
-
-                    <div className="section center">
-                    <div className="row"> 
-                        {this.props.formType == 'login' ? '':
-                        <div className="card left-align">
-                            <div className="card-content">
-                                <p>Note: {error_msg}</p>
+                    
+                    {this.props.state ? 
+                        <div className='center'>
+                            <div className="preloader-wrapper center-align big active">
+                                <div className="spinner-layer spinner-yellow-only">
+                                    <div className="circle-clipper left">
+                                        <div className="circle"></div>
+                                    </div><div className="gap-patch">
+                                        <div className="circle"></div>
+                                    </div><div className="circle-clipper right">
+                                        <div className="circle"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>}                                                       
-                        <div className="col s12">
-                            { this.props.formType == 'login' ? 
-                            <form onSubmit={this.handleSubmit} className="row">
-                                <div className="col s12 input-field">
-                                    <label htmlFor="email">Email </label>
-                                    <input type="email" className="validate" id="email"
-                                      onChange={this.handleForm} required/>
-                                </div>
-                                <div className="input-field col s12">
-                                    <label htmlFor="password"> Password </label>
-                                    <input type="password" className={password_valid?'valid':'invalid'} 
-                                        id="password" required onChange={this.handleForm}
-                                        data-error={error_msg}/>
-                                </div>
-                                <button className={password_valid ? 'btn waves-effect waves-dark yellow':
-                                    "btn waves-effect waves-dark yellow disabled"}>
-                                    Sign Up
-                                </button>
-                            </form>:
-                            <form onSubmit={this.handleSubmit} className="row">
-                                <div className="col s12 input-field">
-                                    <label htmlFor="email">Email </label>
-                                    <input type="email" className="validate" id="email" 
-                                        onChange={this.handleForm} required/>
-                                </div>
-                                <div className="col s12 input-field">
-                                    <label htmlFor="name">Full Name </label>
-                                    <input type="text" id="name" onChange={this.handleForm} required/>
-                                </div>
-                                <div className="input-field col s12">
-                                    <label htmlFor="password"> Password </label>
-                                    <input type="password" className={password_valid?'valid':'invalid'} 
-                                        id="password" required onChange={this.handleForm}
-                                        data-error={error_msg}/>
-                                </div>
-                                <button className={password_valid ? 'btn waves-effect waves-dark yellow':
-                                    "btn waves-effect waves-dark yellow disabled"}>
-                                    Sign Up
-                                </button>
-                            </form>}   
-                        </div>
-
-                        {this.props.formType == 'login' ? '':
-                        <p>By signing up you accept the <a href="#!">Terms and conditions</a></p>}
-
-                        {this.props.formType == 'login' ?
-                        <div className="col s12">
-                            <p> Don't have a account? <Link to='/register'>Register</Link></p>
                         </div>:
-                        <div className="col s12">
-                            <p> Have an account?<Link to='/login'>Login</Link></p>
-                        </div>}
-                    </div>
-                    </div>
+                        <div className="section center">
+                        <div className="row"> 
+                            {this.props.formType == 'login' ? '':
+                            <div className="card left-align">
+                                <div className="card-content">
+                                    <p>Note: {error_msg}</p>
+                                </div>
+                            </div>}                                                       
+                            <div className="col s12">
+                                { this.props.formType == 'login' ? 
+                                <form onSubmit={this.handleSubmit} className="row">
+                                    <div className="col s12 input-field">
+                                        <label htmlFor="email">Email </label>
+                                        <input type="email" className="validate" id="email"
+                                        onChange={this.handleForm} required/>
+                                    </div>
+                                    <div className="input-field col s12">
+                                        <label htmlFor="password"> Password </label>
+                                        <input type="password" className={password_valid?'valid':'invalid'} 
+                                            id="password" required onChange={this.handleForm}
+                                            data-error={error_msg}/>
+                                    </div>
+                                    <button className={password_valid ? 'btn waves-effect waves-dark yellow':
+                                        "btn waves-effect waves-dark yellow disabled"}>
+                                        Sign Up
+                                    </button>
+                                </form>:
+                                <form onSubmit={this.handleSubmit} className="row">
+                                    <div className="col s12 input-field">
+                                        <label htmlFor="email">Email </label>
+                                        <input type="email" className="validate" id="email" 
+                                            onChange={this.handleForm} required/>
+                                    </div>
+                                    <div className="col s12 input-field">
+                                        <label htmlFor="name">Full Name </label>
+                                        <input type="text" id="name" onChange={this.handleForm} required/>
+                                    </div>
+                                    <div className="input-field col s12">
+                                        <label htmlFor="password"> Password </label>
+                                        <input type="password" className={password_valid?'valid':'invalid'} 
+                                            id="password" required onChange={this.handleForm}
+                                            data-error={error_msg}/>
+                                    </div>
+                                    <button className={password_valid ? 'btn waves-effect waves-dark yellow':
+                                        "btn waves-effect waves-dark yellow disabled"}>
+                                        Sign Up
+                                    </button>
+                                </form>}   
+                            </div>
+
+                            {this.props.formType == 'login' ? '':
+                            <p>By signing up you accept the <a href="#!">Terms and conditions</a></p>}
+
+                            {this.props.formType == 'login' ?
+                            <div className="col s12">
+                                <p> Don't have a account? <Link to='/register'>Register</Link></p>
+                            </div>:
+                            <div className="col s12">
+                                <p> Have an account?<Link to='/login'>Login</Link></p>
+                            </div>}
+                        </div>
+                        </div>
+                    }
                 </div>
         );
     }

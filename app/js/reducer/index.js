@@ -7,11 +7,8 @@ import * as constants from '../constants';
 const initialState = {
     isFetching: false,
     isLoggingIn: false,
-    loggedIn: false,
-    didInvalidate: false,
     lastFetch: '',
     access_token: '',
-    refresh_token: '',
     items: {
         id: 0,
         name: 'John Doe',
@@ -32,6 +29,14 @@ const initialState = {
     }
 };
 
+const saveToken = (token) => {
+    if (localStorage){
+        localStorage.setItem('token', token);
+        localStorage.setItem('loggedIn', true);
+    }
+    console.log('token saved');
+};
+
 const rootReducer = (state = initialState, action) => {
     switch (action.type){
         case constants.REQUEST_TOKEN:
@@ -41,11 +46,12 @@ const rootReducer = (state = initialState, action) => {
 
         case constants.RECIEVE_TOKEN:
             state.isLoggingIn = false;
-            state.loggedIn = true;
-            console.log(state);
+            state.loggedIn = true;       
             state.access_token =  action.access_token;
-            state.refresh_token = action.refresh_token;
-            return state
+
+            saveToken(action.refresh_token);
+            return state;
+
         case constants.REQUEST_DATA:
             state.isFetching = true;
             return state;

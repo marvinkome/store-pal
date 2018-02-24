@@ -30,6 +30,11 @@ export default class Navbar extends React.Component{
                             </Link>
                         </li>
 	                    <SideNavItem divider />
+                        <li className="waves-effect waves-yellow">
+                            <a className='light'>
+                                <i className="fa fa-signout"></i> Logout
+                            </a>
+                        </li>
                     </SideNav>
                 </div>
             </nav>

@@ -15,10 +15,11 @@ import {Modal} from 'react-materialize';
 import Listing from '../helpers/Listing.jsx';
 import Navbar from '../helpers/Navbar.jsx';
 import { AddInventory, AddProducts } from '../helpers/Forms.jsx';
+import history from '../../js/history';
 
 const mapStateToProps = state => {
     return {
-        data: state.items
+        data: state
     }
 };
 
@@ -30,12 +31,16 @@ class ConnectingIndex extends React.Component{
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
+    componentWillMount(){
+        if (localStorage.getItem('loggedIn') == undefined){
+            history.push('/login')
+        }
+    }
     handleSubmit(e, state){
         console.log(state.email);
     }
     render(){
-        const inventories = this.props.data.inventories;
+        const inventories = this.props.data.items.inventories;
         return(
             <div>
                 <Navbar/>
@@ -64,18 +69,20 @@ class ConnectingProducts extends React.Component{
         this.afterProdAdd = this.afterProdAdd.bind(this);
         this.style = {}
     }
-
+    componentWillMount(){
+        if (localStorage.getItem('loggedIn') == undefined){
+            history.push('/login')
+        }
+    }
     handleSubmit(e, state){
         console.log(state.email);
     }
-
     afterProdAdd(){
         this.forceUpdate();
     }
-
     render(){
         const id = this.props.match.params.id;
-        const inventory = this.props.data.inventories.find(obj => obj.id == id);
+        const inventory = this.props.data.items.inventories.find(obj => obj.id == id);
         return(
             <div>
                 <Navbar/>

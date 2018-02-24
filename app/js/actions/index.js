@@ -61,3 +61,28 @@ export function register_user(data){
         )
     }
 };
+
+export const login_user = (data) => {
+    return dispatch => {
+        dispatch(requestToken());
+
+        const headers = {
+            method: 'POST',
+            body: JSON.stringify({
+                email: data.email,
+                password: data.password
+            }),
+            headers: new Headers({
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            })
+        }
+
+        return fetch('http://127.0.0.1:5000/login', headers).then(
+            resp => resp.json()
+        ).then(
+            (res) => {dispatch(recieveToken(res));},
+            (error) => console.log('Error: ' + error)
+        )
+    }
+};

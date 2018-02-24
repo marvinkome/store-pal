@@ -20,7 +20,6 @@ export default class App extends React.Component{
                 <Route path='/login' exact component={Login}/>
                 <Route path='/' exact component={Index}/>
                 <Route path='/inventory/:id' exact component={Products}/>
-                
             </Switch>
         );
     }

@@ -14,7 +14,7 @@ import { addInventory, addProduct } from '../../js/actions';
 
 const mapInvDispatchToProps = dispatch => {
     return {
-        addInventory: inventory => dispatch(addInventory(inventory))
+        addInventory: (token, inventory, cb) => dispatch(addInventory(token, inventory, cb))
     }
 };
 const mapProdDispatchToProps = dispatch => {
@@ -52,14 +52,9 @@ class AddInventoryToConnect extends React.Component{
             return;
         }
 
-        this.props.addInventory({
-            id: id,
-            name: inventory_name,
-            products: []
+        this.props.addInventory(localStorage.token, inventory_name, () => {
+            this.props.afterInvAdd();
         });
-
-        console.log('Added in component');
-        history.push('/inventory/' + id);
     }
 
     render(){

@@ -11,7 +11,7 @@ import { logout_user } from '../../js/actions';
 
 const mapDispatchToProps = dispatch => {
     return {
-        logout_user: dispatch(logout_user())
+        logout_user: () => dispatch(logout_user())
     }
 }
 
@@ -21,10 +21,8 @@ class ConnectingNavbar extends React.Component{
         this.logoutUser = this.logoutUser.bind(this)
     }
     logoutUser(){
-        if(localStorage){
-            
-            history.push('/login');
-        }
+        console.log('sturborn z')
+        this.props.logout_user()
     }
     render(){
         return(
@@ -39,8 +37,8 @@ class ConnectingNavbar extends React.Component{
 		                    user={{
 			                    background: './app/images/office.jpg',
 			                    image: './app/images/yuna.jpg',
-			                    name: this.props.data.items.name,
-			                    email: this.props.data.items.email
+			                    name: this.props.data.name,
+			                    email: this.props.data.email
 		                    }}
 	                    />
 	                    <li className="waves-effect waves-yellow">

@@ -16,6 +16,7 @@ import Listing from '../helpers/Listing.jsx';
 import Navbar from '../helpers/Navbar.jsx';
 import { AddInventory, AddProducts } from '../helpers/Forms.jsx';
 import history from '../../js/history';
+import { fetch_data, fetch_from_store, deleteInventory } from '../../js/actions';
 
 const mapStateToProps = state => {
     return {
@@ -23,28 +24,77 @@ const mapStateToProps = state => {
     }
 };
 
+const mapDispatch = dispatch => {
+    return {
+        fetch_data : (token, cb) => dispatch(fetch_data(token, cb)),
+        fetch_from_local : () => dispatch(fetch_from_store()),
+        deleteInventory: (token, inventory, cb) => dispatch(deleteInventory(token, inventory, cb))
+    }
+}
+
 class ConnectingIndex extends React.Component{
     constructor(props){
         super(props);
-
-        this.state = {};
-
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            isLoaded: false,
+        }
+        this.afterInvAdd = this.afterInvAdd.bind(this);
+        this.onDeleteItem = this.onDeleteItem.bind(this);
     }
     componentWillMount(){
         if (localStorage.getItem('loggedIn') == undefined){
             history.push('/login')
-        }
+        } 
     }
-    handleSubmit(e, state){
-        console.log(state.email);
+    componentDidMount(){
+        if(localStorage.state){
+            this.props.fetch_from_local();
+            this.setState({
+                isLoaded: true
+            });
+        } else {
+            this.props.fetch_data(localStorage.token, () => {
+                this.setState({
+                    isLoaded: true
+                });
+                console.log('updated')
+            })
+        }
+        console.log('component did mount'); 
+    }
+    onDeleteItem(id){
+        const token = localStorage.token
+        console.log('about to delete')
+
+        this.props.deleteInventory(token, id, () => {
+            this.forceUpdate();
+        })
+    }
+    afterInvAdd(){
+        this.forceUpdate();
     }
     render(){
+        console.log(this.props.data);
         const inventories = this.props.data.items.inventories;
         return(
             <div>
-                <Navbar data={this.props.data}/>
-                <Listing page='index' user_data={inventories}/>
+                <Navbar data={this.props.data.items}/>
+                {this.state.isLoaded ? 
+                    <Listing page='index' user_data={inventories} onDelete={this.onDeleteItem}/>:
+                    <div className='center'>
+                        <div className="preloader-wrapper center-align big active">
+                            <div className="spinner-layer spinner-yellow-only">
+                                <div className="circle-clipper left">
+                                    <div className="circle"></div>
+                                </div><div className="gap-patch">
+                                    <div className="circle"></div>
+                                </div><div className="circle-clipper right">
+                                    <div className="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
                 <Modal
                     header='Add Inventory'
                     trigger={
@@ -53,10 +103,13 @@ class ConnectingIndex extends React.Component{
                                 <i className="fa fa-plus"></i>
                             </a>
                         </div>
+                    }
+                    actions={
+                        <a className="modal-action modal-close waves-effect waves-yellow btn-flat">Close</a>
                     }>
-                    <AddInventory/>
+                    <AddInventory afterInvAdd={this.afterInvAdd}/>
                 </Modal>
-            </div>
+            </div>            
         );
     }
 }
@@ -106,5 +159,5 @@ class ConnectingProducts extends React.Component{
     }
 }
 
-export const Index = connect(mapStateToProps)(ConnectingIndex);
+export const Index = connect(mapStateToProps,mapDispatch)(ConnectingIndex);
 export const Products = connect(mapStateToProps)(ConnectingProducts);

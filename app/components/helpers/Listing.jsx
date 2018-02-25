@@ -8,10 +8,16 @@ import { Link } from 'react-router-dom';
 
 
 export default class Listing extends React.Component{
+    constructor(props){
+        super(props);
+        this.onDeleteItem = this.onDeleteItem.bind(this)
+    }
+    onDeleteItem(id){
+        this.props.onDelete(id)
+    }
     render(){
         const page = this.props.page;
         const data = this.props.user_data;
-        //const inventory = this.props.inventory.find( obj => obj.id == id);
         return(
             <div className="container section">
                 <div className="row">
@@ -38,7 +44,7 @@ export default class Listing extends React.Component{
                                 <li key={inventory.id} className="collection-item avatar">
                                     <i className="circle green fa fa-building"></i>
                                     <Link to={'/inventory/'+ inventory.id}
-                                    className='black-text'>
+                                      className='black-text'>
                                         <span className="title">
                                             {inventory.name}
                                         </span>
@@ -57,19 +63,21 @@ export default class Listing extends React.Component{
                                         </span><br/>
                                     </p>}
                                     <Modal
-                                    header='DELETE INVENTORY'
-                                    trigger={
+                                      header='DELETE INVENTORY'
+                                      trigger={
                                         <a className="secondary-content">
                                             <i className="fa fa-2x fa-trash green-text"></i>
                                         </a>
-                                    }
-                                    actions={
+                                      }
+                                      actions={
                                         <div>
-                                            <a className="modal-action waves-effect waves-yellow btn-flat">Yes</a>
+                                            <a className="modal-action waves-effect waves-yellow btn-flat"
+                                              onClick={() => this.onDeleteItem(inventory.name)}>Yes</a>
                                             <a className="modal-action modal-close waves-effect waves-yellow btn-flat">No</a>
                                         </div>
                                     }>
-                                        <p>Are you sure you want to delet this Inventory?
+                                        <p className='center'>
+                                            Are you sure you want to delet this Inventory?
                                             It can't be undone
                                         </p>
                                     </Modal>

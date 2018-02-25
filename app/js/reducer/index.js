@@ -9,24 +9,11 @@ const initialState = {
     isLoggingIn: false,
     didInvalidate: false,
     lastFetch: '',
-    access_token: '',
     items: {
         id: 0,
         name: 'Jane Doe',
         email: 'janedoe@gmail.com',
-        inventories: [
-            {
-                id: 0,
-                name: 'Inventory Name from Redux',
-                products: [
-                    {
-                        id: 0,
-                        name: 'Product name from Redux',
-                        quantity: 0
-                    }
-                ]
-            }
-        ]
+        inventories: []
     }
 };
 
@@ -51,15 +38,11 @@ const rootReducer = (state = initialState, action) => {
         case constants.RECIEVE_TOKEN:
             state.isLoggingIn = false;  
             state.didInvalidate = false;    
-            state.access_token =  action.access_token;
-
             saveToken(action.refresh_token);
             return state;
 
-        case constants.LOGOUT_USER:      
-            state.access_token =  '';
+        case constants.LOGOUT_USER:  
             localStorage.removeItem('loggedIn');
-
             return state;
 
         case constants.REQUEST_DATA:
@@ -67,22 +50,18 @@ const rootReducer = (state = initialState, action) => {
             return state;
 
         case constants.RECIEVE_DATA:
-            state.isFetching = true;
+            state.isFetching = false;
             state.lastFetch = Date.now();
             state.items = action.data;
+            if(localStorage){
+                localStorage.state = JSON.stringify(state.items)
+            }
             return state;
-
-        case constants.ADD_INVENTORY:
-            Object.assign(state.items, {
-                inventories: [...state.items.inventories, action.payload]
-            });
-            return state;
-        case constants.ADD_PRODUCT:
-            const inventory = state.items.inventories.find( inv => inv.id == action.inv_id);
-            Object.assign(inventory, {
-                products: [...inventory.products, action.payload]
-            });
-            return state;
+        case constants.FETCH_FROM_STORE:
+            const items = JSON.parse(localStorage.getItem('state'))    
+            state.items = items;
+            return state
+    
         default:
             return state;
     }

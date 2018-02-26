@@ -1,5 +1,5 @@
 /**
- * .app/js/actions/index.js
+ * .app/js/redux/actions/index.js
  */
 
 import * as constants from '../constants';

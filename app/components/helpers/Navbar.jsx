@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import history from '../../js/history';
 import {connect} from 'react-redux';
 import { SideNav, SideNavItem } from 'react-materialize';
-import { logout_user } from '../../js/actions';
+import { logout_user } from '../../js/redux/actions';
 
 const mapDispatchToProps = dispatch => {
     return {

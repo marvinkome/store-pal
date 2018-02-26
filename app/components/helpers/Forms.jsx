@@ -10,7 +10,7 @@ import history from '../../js/history';
 
 // Redux
 import { connect } from 'react-redux';
-import { addInventory, addProduct } from '../../js/actions';
+import { addInventory, addProduct } from '../../js/redux/actions';
 
 const mapInvDispatchToProps = dispatch => {
     return {

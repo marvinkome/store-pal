@@ -16,7 +16,7 @@ import Listing from '../helpers/Listing.jsx';
 import Navbar from '../helpers/Navbar.jsx';
 import { AddInventory, AddProducts } from '../helpers/Forms.jsx';
 import history from '../../js/history';
-import { fetch_data, fetch_from_store, deleteInventory } from '../../js/actions';
+import { fetch_data, fetch_from_store, deleteInventory } from '../../js/redux/actions';
 
 const mapStateToProps = state => {
     return {

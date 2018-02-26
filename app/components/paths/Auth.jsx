@@ -10,7 +10,7 @@ import history from '../../js/history';
 
 // Redux
 import {connect} from 'react-redux';
-import { register_user, login_user, recieveToken } from '../../js/actions';
+import { register_user, login_user, recieveToken } from '../../js/redux/actions';
 
 // Components
 import LoginForm from '../helpers/Login.jsx';

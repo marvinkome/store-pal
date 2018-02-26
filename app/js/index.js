@@ -11,7 +11,7 @@ import {Router, Route} from 'react-router-dom';
 import history from './history.js';
 
 // Redux
-import store from './store/index';
+import store from '.redux/store';
 import { Provider } from 'react-redux';
 
 // Components

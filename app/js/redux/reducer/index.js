@@ -1,21 +1,9 @@
 /**
- * .app/js/reducer/index.js
+ * .app/js/redux/reducer/index.js
  */
 
 import * as constants from '../constants';
-
-const initialState = {
-    isFetching: false,
-    isLoggingIn: false,
-    didInvalidate: false,
-    lastFetch: '',
-    items: {
-        id: 0,
-        name: 'Jane Doe',
-        email: 'janedoe@gmail.com',
-        inventories: []
-    }
-};
+import initialState from '../init';
 
 const saveToken = (token) => {
     if (localStorage){

@@ -48,9 +48,12 @@ const updateItemArray = (array, itemId, callback, key = 'id') => {
 const add_product = (state, action) => {
     const new_product = state.products.concat(action.payload);
 
-    return updateObject(state, {
+    const store = updateObject(state, {
         products: new_product
     });
+
+    saveStore(store);
+    return store;
 }
 
 const edit_product = (state, action) => {
@@ -58,17 +61,23 @@ const edit_product = (state, action) => {
         return updateObject(item, action.product);
     });
 
-    return updateObject(state, {
+    const store = updateObject(state, {
         products: new_product
     });
+
+    saveStore(store);
+    return store;
 }
 
 const delete_product = (state, action) => {
     const new_product = removeItem(state.products, action.product_id);
 
-    return updateObject(state, {
+    const store = updateObject(state, {
         products: new_product
     });
+
+    saveStore(store);
+    return store;
 }
 
 const product_sold = (state, action) => {
@@ -109,13 +118,15 @@ const product_sold = (state, action) => {
             }, 'name')
         }
     }
-    console.log('creditor', new_creditor);
 
-    return updateObject(state, {
+    const store = updateObject(state, {
         products: new_product,
         sold_items: new_sale,
         creditors: new_creditor
     });
+
+    saveStore(store);
+    return store;
 }
 
 const credit_paid = (state, action) => {
@@ -139,9 +150,12 @@ const credit_paid = (state, action) => {
         history.push('/creditors');
     }
 
-    return updateObject(state, {
+    const store = updateObject(state, {
         creditors: new_credit
     });
+
+    saveStore(store);
+    return store;
 }
 
 // Root reducer

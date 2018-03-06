@@ -10,7 +10,7 @@ if (localStorage && localStorage.store_pal_store){
 } else {
     initialState = {
         id: 0,
-        name: 'Anonumous',
+        name: 'Anonymous',
         email: 'unknown@known.com',
         products: [
             // {

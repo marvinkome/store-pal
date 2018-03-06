@@ -9,10 +9,10 @@ a:focus,
   color: #fdd835;
 }
 nav ul a:hover{
-  background-color: transparent;
+  background-color: transparent !important;
 }
 .tabs .indicator{
-  background-color: #fdd835;
+  background-color: #fdd835 !important;
 }
 input[type=text]:focus:not([readonly]),
 input[type=email]:focus:not([readonly]),

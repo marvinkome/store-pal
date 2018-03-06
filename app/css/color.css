@@ -3,14 +3,20 @@
 */
 a,
 a:hover,
-a:focus,nav ul a {
+a:focus,
+.tabs .tab a,
+.tabs .tab a:hover, .tabs .tab a.active{
   color: #fdd835;
 }
 nav ul a:hover{
   background-color: transparent;
 }
+.tabs .indicator{
+  background-color: #fdd835;
+}
 input[type=text]:focus:not([readonly]),
 input[type=email]:focus:not([readonly]),
+input[type=number]:focus:not([readonly]),
 input[type=password]:focus:not([readonly]) {
   border-bottom: 1px solid #fdd835 !important;
   box-shadow: 0 1px 0 0 #fdd835 !important;
@@ -19,6 +25,9 @@ input[type=text]:focus:not([readonly]) + label {
   color: #fdd835 !important;
 }
 input[type=email]:focus:not([readonly]) + label {
+  color: #fdd835 !important;
+}
+input[type=number]:focus:not([readonly]) + label {
   color: #fdd835 !important;
 }
 input[type=password]:focus:not([readonly]) + label {

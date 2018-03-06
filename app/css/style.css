@@ -19,6 +19,27 @@ nav .button-collapse:hover,
     color: #fff;
 }
 
+/* typography and icons */
+h5{
+    font-weight: 300;
+}
+h5.title{
+    font-size: 1.5rem;
+}
+i.fa {
+    font-size: 20px;
+}
+span.badge {
+    min-width: 2rem;
+    padding: 0px 6px;
+    border-radius: 40%;
+}
+.bold{
+    font-weight: 700;
+}
+table tr, table td{
+    text-transform: capitalize;
+}
 /* action button */
 .action-button i{
     font-size: 1.36em;
@@ -29,13 +50,24 @@ nav .button-collapse:hover,
     margin-top: 2rem !important;
 }
 
-/* note page */
-h5{
-    font-weight: 300;
+/* card */
+.card .card-content {
+    padding: 10px 20px;
 }
-h5.title{
-    font-size: 1.5rem;
+.card .card-action {
+    padding: 10px 24px;
 }
-.collection .collection-item.avatar .title{
-    font-weight: 500;
+.card .card-action .row {
+    margin-bottom: 0px;
+}
+.card {
+    border-radius: 0px;
+}
+.card-title{
+    text-transform: capitalize;
+}
+
+/* modal */
+.modal{
+    max-height: 95%;
 }

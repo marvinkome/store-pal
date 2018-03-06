@@ -12,36 +12,87 @@ import {connect} from 'react-redux';
 import {Modal} from 'react-materialize';
 
 // Components
-import Listing from '../helpers/Listing.jsx';
+import {
+    MainList,
+    ProductsList,
+    CreditorsList,
+    CreditorItemsList,
+    ProductSold
+} from '../listings';
+
 import Navbar from '../helpers/Navbar.jsx';
-import { AddInventory, AddProducts } from '../helpers/Forms.jsx';
+import { AddProducts, Searchform } from '../helpers/Forms.jsx';
 
 const mapStateToProps = state => {
     return {
-        data: state.items
+        data: state
     }
 };
 
 class ConnectingIndex extends React.Component{
     constructor(props){
         super(props);
-
-        this.state = {};
-
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            data: this.props.data.products
+        }
+        this.handleSearch = this.handleSearch.bind(this);
     }
-
-    handleSubmit(e, state){
-        console.log(state.email);
+    componentWillReceiveProps(np){
+        this.setState({
+            data: np.data.products
+        });
+    }
+    handleSearch(data){
+        this.setState({
+            data: data
+        });
     }
     render(){
-        const inventories = this.props.data.inventories;
+        const products = this.props.data.products;
+        const searched_products = this.state.data;
+
+         return(
+            <div>
+                <Navbar data={this.props.data}/>
+                <Searchform data={products} new_data={this.handleSearch}/>
+                <MainList user_data={searched_products}/>
+            </div>
+        );
+    }
+}
+
+class ConnectingItems extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            data: this.props.data.products
+        }
+        this.handleSearch = this.handleSearch.bind(this);
+    }
+    componentWillReceiveProps(np){
+        this.setState({
+            data: np.data.products
+        });
+    }
+    handleSearch(data){
+        this.setState({
+            data: data
+        })
+    }
+    render(){
+        const products = this.props.data.products;
+        const searched_products = this.state.data;
+
         return(
             <div>
-                <Navbar/>
-                <Listing page='index' user_data={inventories}/>
+                <Navbar data={this.props.data}/>
+                <Searchform data={products} new_data={this.handleSearch}/>
+                <ProductsList user_data={searched_products}/>
                 <Modal
-                    header='Add Inventory'
+                    header='Add Product'
+                    modalOptions={{
+                        opacity: .0
+                    }}
                     trigger={
                         <div className='fixed-action-btn action-button'>
                             <a className="btn-floating btn-large yellow darken-1">
@@ -49,55 +100,94 @@ class ConnectingIndex extends React.Component{
                             </a>
                         </div>
                     }>
-                    <AddInventory/>
+                    <AddProducts/>
                 </Modal>
             </div>
         );
     }
 }
 
-class ConnectingProducts extends React.Component{
+class ConnectingCreditors extends React.Component{
     constructor(props){
         super(props);
-
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.afterProdAdd = this.afterProdAdd.bind(this);
-        this.style = {}
+        this.state = {
+            data: this.props.data.creditors
+        }
+        this.handleSearch = this.handleSearch.bind(this);
     }
-
-    handleSubmit(e, state){
-        console.log(state.email);
+    componentWillReceiveProps(np){
+        this.setState({
+            data: np.data.creditors
+        });
     }
-
-    afterProdAdd(){
-        this.forceUpdate();
+    handleSearch(data){
+        this.setState({
+            data: data
+        })
     }
-
     render(){
-        const id = this.props.match.params.id;
-        const inventory = this.props.data.inventories.find(obj => obj.id == id);
+        const creditors = this.props.data.creditors;
+        const searched_creditors = this.state.data;
         return(
             <div>
-                <Navbar/>
-                <Listing page='inventory' user_data={inventory}/>
-                <Modal
-                    header='Add Product'
-                    actions={
-                        <a className="modal-action modal-close waves-effect waves-yellow btn-flat">Close</a>
-                    }
-                    trigger={
-                        <div className='fixed-action-btn action-button'>
-                            <a className="btn-floating btn-large yellow darken-1">
-                                <i className="fa fa-plus"></i>
-                            </a>
-                        </div>
-                    }>
-                    <AddProducts inv_id={id} afterProdAdd={this.afterProdAdd}/>
-                </Modal>
+                <Navbar data={this.props.data}/>
+                <Searchform data={creditors} new_data={this.handleSearch}/>
+                <CreditorsList user_data={searched_creditors}/>
             </div>
         );
+    }
+}
+
+class ConnectingCreditorItems extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            data: this.props.data.creditors.find(obj => obj.name == this.props.match.params.name).items_owing
+        }
+        this.handleSearch = this.handleSearch.bind(this);
+    }
+    componentWillReceiveProps(np){
+        this.setState({
+            data: np.data.creditors.find(obj => obj.name == this.props.match.params.name).items_owing
+        });
+    }
+    handleSearch(data){
+        this.setState({
+            data: data
+        })
+    }
+    render(){
+        const creditor = this.props.data.creditors.find(obj => obj.name == this.props.match.params.name);
+        const searched_item = this.state.data;
+        return(
+            <div>
+                <Navbar data={this.props.data}/>
+                <Searchform data={creditor.items_owing} new_data={this.handleSearch}/>
+                <div className="container">
+                    <h5 className="center-align">
+                        {creditor.name.toUpperCase()}
+                    </h5>
+                </div>
+                <CreditorItemsList items={searched_item} creditor={creditor.name}/>
+            </div>
+        );
+    }
+}
+
+class ConnectingRegistry extends React.Component{
+    render(){
+        const data = this.props.data.sold_items;
+        return(
+            <div>
+                <Navbar data={this.props.data}/>
+                <ProductSold data={data}/>
+            </div>
+        )
     }
 }
 
 export const Index = connect(mapStateToProps)(ConnectingIndex);
-export const Products = connect(mapStateToProps)(ConnectingProducts);
+export const Products = connect(mapStateToProps)(ConnectingItems);
+export const Creditors = connect(mapStateToProps)(ConnectingCreditors);
+export const Creditor = connect(mapStateToProps)(ConnectingCreditorItems);
+export const Registry = connect(mapStateToProps)(ConnectingRegistry);

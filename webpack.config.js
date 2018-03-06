@@ -18,8 +18,8 @@ module.exports = {
     },
     module: {
         loaders: [
-            {test: /\.js$/, loader: 'babel-loader', exclude: /node-modules/ },
-            {test: /\.jsx$/, loader: 'babel-loader', exclude: /node-modules/ }
+            {test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+            {test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
         ]
     },
     plugins: [

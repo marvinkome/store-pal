@@ -7,7 +7,7 @@ import * as constants from '../constants';
 let nextId = 0;
 
 export const addProduct = (product) => {
-    let edited_product = Object.assign({}, product, {id: nextId+1})
+    let edited_product = Object.assign({}, product, {id: nextId})
     nextId = nextId + 1;
     return {
         type: constants.ADD_PRODUCT,

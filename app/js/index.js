@@ -20,7 +20,7 @@ import App from '../components/App.jsx';
 // css && materialize js
 import '../../node_modules/materialize-css/dist/css/materialize.min.css';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
-import '../css/style.css';
+//import '../css/style.css';
 import '../../node_modules/jquery/dist/jquery.min';
 import '../../node_modules/materialize-css/dist/js/materialize.min.js';
 

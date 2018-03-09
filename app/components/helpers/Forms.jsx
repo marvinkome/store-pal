@@ -158,7 +158,6 @@ class SoldProductToConnect extends React.Component{
         super(props);
 
         this.state = {
-            product_name: this.props.product.name,
             ammount_paid: this.props.product.price,
             quantity_sold: 1,
             will_be_credit: false,
@@ -192,7 +191,7 @@ class SoldProductToConnect extends React.Component{
     handleSubmit(e){
         e.preventDefault();
 
-        let {product_name, quantity_sold, ammount_paid, will_be_credit, creditor_name, required_amount} = this.state;
+        let {quantity_sold, ammount_paid, will_be_credit, creditor_name, required_amount} = this.state;
         const id = this.props.product.id;
         const date_sold = Date.now();
         const on_credit = will_be_credit;
@@ -207,7 +206,7 @@ class SoldProductToConnect extends React.Component{
         }
 
         this.props.productSold(id, {
-            product_name: product_name.toLowerCase(),
+            product_name: this.props.product.name,
             quantity_sold: Number(quantity_sold),
             ammount_paid: Number(ammount_paid) * Number(quantity_sold),
             date_sold,
@@ -218,7 +217,6 @@ class SoldProductToConnect extends React.Component{
         });
 
         this.setState({
-            product_name: this.props.product.name,
             ammount_paid: this.props.product.price,
             quantity_sold: 1,
             will_be_credit: false,
@@ -229,11 +227,6 @@ class SoldProductToConnect extends React.Component{
     render(){
         return(
             <form onSubmit={this.handleSubmit} className="row center">
-                <div className="col s12 input-field">
-                    <label htmlFor="product_name">Item Name </label>
-                    <input type="text" id="product_name"
-                      onChange={this.handleChange} value={this.state.product_name}/>
-                </div>
                 <div className="col s12 input-field">
                     <label htmlFor="quantity_sold">Quantity Sold </label>
                     <input type="number" id="quantity_sold" min='0'

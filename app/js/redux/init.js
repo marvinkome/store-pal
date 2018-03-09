@@ -1,4 +1,5 @@
 /**
+<<<<<<< HEAD
  * .app/js/redux/reducer/index.js
  */
 
@@ -58,5 +59,22 @@ if (localStorage && localStorage.store_pal_store){
         ]
     };
 }
+=======
+ * .app/js/redux/init.js
+ */
+
+const initialState = {
+    isFetching: false,
+    isLoggingIn: false,
+    didInvalidate: false,
+    lastFetch: '',
+    items: {
+        id: 0,
+        name: 'Jane Doe',
+        email: 'janedoe@gmail.com',
+        inventories: []
+    }
+};
+>>>>>>> master
 
 export default initialState;

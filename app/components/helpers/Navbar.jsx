@@ -4,9 +4,26 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import history from '../../js/history';
+import {connect} from 'react-redux';
 import { SideNav, SideNavItem } from 'react-materialize';
+import { logout_user } from '../../js/redux/actions';
 
-export default class Navbar extends React.Component{
+const mapDispatchToProps = dispatch => {
+    return {
+        logout_user: () => dispatch(logout_user())
+    }
+}
+
+class ConnectingNavbar extends React.Component{
+    constructor(props){
+        super(props);
+        this.logoutUser = this.logoutUser.bind(this)
+    }
+    logoutUser(){
+        console.log('sturborn z')
+        this.props.logout_user()
+    }
     render(){
         const name = this.props.data.name;
         const email = this.props.data.email;
@@ -53,6 +70,11 @@ export default class Navbar extends React.Component{
                             </Link>
                         </li>
 	                    <SideNavItem divider />
+                        <li className="waves-effect waves-yellow">
+                            <a className='light' onClick={this.logoutUser}>
+                                <i className="fa fa-sign-out"></i> Logout
+                            </a>
+                        </li>
                     </SideNav>
 
                     <ul className="right hide-on-med-and-above">

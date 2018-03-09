@@ -29,6 +29,14 @@ const mapStateToProps = state => {
     }
 };
 
+const mapDispatch = dispatch => {
+    return {
+        fetch_data : (token, cb) => dispatch(fetch_data(token, cb)),
+        fetch_from_local : () => dispatch(fetch_from_store()),
+        deleteInventory: (token, inventory, cb) => dispatch(deleteInventory(token, inventory, cb))
+    }
+}
+
 class ConnectingIndex extends React.Component{
     constructor(props){
         super(props);
@@ -99,10 +107,13 @@ class ConnectingItems extends React.Component{
                                 <i className="fa fa-plus"></i>
                             </a>
                         </div>
+                    }
+                    actions={
+                        <a className="modal-action modal-close waves-effect waves-yellow btn-flat">Close</a>
                     }>
                     <AddProducts/>
                 </Modal>
-            </div>
+            </div>            
         );
     }
 }
